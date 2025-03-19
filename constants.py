@@ -20,12 +20,11 @@ VLLM_SERVER_CMD_TEMPLATE = (
 )
 
 SGLANG_SERVER_CMD_TEMPLATE = (
-    f"python -m sglang.launch_server --model-path {MODEL} "
-    "--host {}"
-    "--disable-radix --disable-cuda-graph "
+    f"python3 -m sglang.bench_serving "
+    f"--model-path {MODEL} "
+    "--host {} "
     "{}"
 )
-
 
 CLIENT_CMD_TEMPLATE = (
     f"python ~/vllm/benchmarks/benchmark_serving.py --result-dir {DIR} "

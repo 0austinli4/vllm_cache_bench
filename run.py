@@ -1,4 +1,4 @@
-from constants import DIR, CLIENT_CMD_TEMPLATE, VLLM_SERVER_CMD_TEMPLATE, SERVER_READY_PATTERN
+from constants import DIR, CLIENT_CMD_TEMPLATE, VLLM_SERVER_CMD_TEMPLATE, SERVER_READY_PATTERN, SGLANG_SERVER_CMD_TEMPLATE
 import json
 import subprocess
 import time
@@ -40,10 +40,9 @@ client_configs = [
 def run_server(server_config):
     """Start the server with specified parallel sizes."""
     log_file_name = f"{LOG_FILE}_{server_config['port']}_{server_config['eviction_algorithm']}.log"
-    server_cmd = SGLANG_SERVER_CMD_TEMPLATE.format(server_config['args'])
+    server_cmd = SGLANG_SERVER_CMD_TEMPLATE.format(server_config['host'], server_config['args'])
     print('\n', server_cmd, '\n')
     ssh_command = (
-        #ssh onto server
         f"ssh {server_config['host']} \""
         # f"source /opt/conda/etc/profile.d/conda.sh && "  # Ensure Conda is sourced
         # f"conda activate pytorch && "  # Activate the environment
@@ -169,4 +168,5 @@ async def main():
     await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    # asyncio.run(main())
+    run_server(server_configs[0])

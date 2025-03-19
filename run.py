@@ -10,45 +10,45 @@ from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
 
 server_configs = []
 i = 0
-for alg in ['lruml', 'lru']:
-    for size in [0.12, 0.1225, 0.125, 0.1275]:
-        server_configs.append({'host': 'localhost', 
+for alg in ['lru']:
+    for size in [0.12]:
+        server_configs.append({
+            'host': 'localhost', 
             'cuda_devices': f'CUDA_VISIBLE_DEVICES={i}',
             'eviction_algorithm': alg,
-            'port': 8000+i,
-            'size': size,
-            'args': f'--gpu_memory_utilization {size} '
-            f' --pipeline-parallel-size 1 --port {8000+i} '       
-            f' --eviction_algorithm {alg} --block_size=16'})
+            'port': 8000 + i,
+            'args': (
+                f"--max-loras-per-batch 8 "
+                f"--max-running-requests 8 "
+                f"--lora-backend triton "
+                f"--tp-size 1 "
+                f"--disable-custom-all-reduce"
+            )
+        })
         i += 1
 
 dataset = 'sharegpt'
 dataset_file = '~/ShareGPT_V3_unfiltered_cleaned_split.json'
+# prompts = 100000
 client_configs = [
     {
-        'num_prompts': 100000,
+        'num_prompts': 1000, 
         'request_rate': 0.1,
-    },
-    {
-        'num_prompts': 100000,
-        'request_rate': 0.05,
-    },
-    {
-        'num_prompts': 100000,
-        'request_rate': 0.025,
     }
 ]
 
 def run_server(server_config):
     """Start the server with specified parallel sizes."""
     log_file_name = f"{LOG_FILE}_{server_config['port']}_{server_config['eviction_algorithm']}.log"
-    server_cmd = VLLM_SERVER_CMD_TEMPLATE.format(server_config['args'])
+    server_cmd = SGLANG_SERVER_CMD_TEMPLATE.format(server_config['args'])
     print('\n', server_cmd, '\n')
     ssh_command = (
+        #ssh onto server
         f"ssh {server_config['host']} \""
         # f"source /opt/conda/etc/profile.d/conda.sh && "  # Ensure Conda is sourced
         # f"conda activate pytorch && "  # Activate the environment
-        f"{server_config['cuda_devices']} {server_cmd}\""  # Run the actual command
+        # launch server
+        f"{server_config['cuda_devices']} {server_cmd}\""
     )
     with open(log_file_name, "w") as log_file:
         process = subprocess.Popen(ssh_command, shell=True, stdout=log_file, stderr=log_file)
@@ -106,6 +106,8 @@ async def run_client(client_config, server_config):
     print("Client stdout:", stdout.decode())
     print("Client stderr:", stderr.decode())
     hit_ratios = []
+
+    ## do it by std out of stats
     for line in stdout.decode().split("\n"):
         if 'gpu_prefix_cache_hit_rate' in line:
             hit_ratios.append(line.split()[-1])
@@ -125,11 +127,11 @@ async def start_server(server_config):
     log_file_name = await asyncio.to_thread(run_server, server_config)
     print("wait_for_server_ready:", log_file_name)
     is_ready = await asyncio.to_thread(wait_for_server_ready, log_file_name)
-    return is_ready
+    return is_ready, log_file_name
 
 async def start_exp(server_config, client_configs):
     print("Starting server configuration:", server_config)
-    await start_server(server_config)
+    is_ready, log_file_name = await start_server(server_config)
     
     results = []
     for client_config in client_configs:

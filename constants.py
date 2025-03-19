@@ -1,6 +1,7 @@
 import os
 
 MODEL = "Qwen/Qwen2.5-0.5B" # "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B" # 'Qwen/Qwen2.5-32B'
+BACKEND = "sglang"
 DIR = f"results/{MODEL.split('/')[-1]}"
 if not os.path.exists(DIR):
     os.makedirs(DIR)
@@ -18,9 +19,17 @@ VLLM_SERVER_CMD_TEMPLATE = (
     "{} "
 )
 
+SGLANG_SERVER_CMD_TEMPLATE = (
+    f"python -m sglang.launch_server --model-path {MODEL} "
+    "--host {}"
+    "--disable-radix --disable-cuda-graph "
+    "{}"
+)
+
+
 CLIENT_CMD_TEMPLATE = (
     f"python ~/vllm/benchmarks/benchmark_serving.py --result-dir {DIR} "
-    f"--save-result --model {MODEL} --endpoint /v1/chat/completions "
+    f"--save-result --backend {BACKEND} --model {MODEL} --endpoint /v1/chat/completions "
     "--dataset-path {} --dataset-name {}  --host {} --port {} "
     "--result-filename {} --num-prompts {} --request-rate {}"
 )

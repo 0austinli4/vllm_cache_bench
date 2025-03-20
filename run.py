@@ -7,6 +7,8 @@ from utils import kill_server
 import os
 import re
 from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
+from sglang.test.test_utils import is_in_ci
+from sglang.utils import wait_for_server, print_highlight, terminate_process
 
 server_configs = []
 i = 0
@@ -15,14 +17,9 @@ for alg in ['lru']:
         server_configs.append({
             'host': 'localhost', 
             'cuda_devices': f'CUDA_VISIBLE_DEVICES={i}',
-            'eviction_algorithm': alg,
-            'port': 8000 + i,
             'args': (
-                f"--max-loras-per-batch 8 "
-                f"--max-running-requests 8 "
-                f"--lora-backend triton "
-                f"--tp-size 1 "
-                f"--disable-custom-all-reduce"
+                f"--host localhost "
+                f"--port {8000 + i} "
             )
         })
         i += 1
@@ -40,7 +37,7 @@ client_configs = [
 def run_server(server_config):
     """Start the server with specified parallel sizes."""
     log_file_name = f"{LOG_FILE}_{server_config['port']}_{server_config['eviction_algorithm']}.log"
-    server_cmd = SGLANG_SERVER_CMD_TEMPLATE.format(server_config['host'], server_config['args'])
+    server_cmd = SGLANG_SERVER_CMD_TEMPLATE.format(server_configs[0]['args'])
     print('\n', server_cmd, '\n')
     ssh_command = (
         f"ssh {server_config['host']} \""
@@ -54,8 +51,7 @@ def run_server(server_config):
 
     return log_file_name
 
-
-def wait_for_server_ready(log_file_name, timeout=600):
+def wait_for_server_ready(log_file_name, timeout=60):
     """Wait until the server is ready or a timeout occurs."""
     for _ in range(timeout):
         if os.path.exists(log_file_name):
@@ -108,7 +104,7 @@ async def run_client(client_config, server_config):
 
     ## do it by std out of stats
     for line in stdout.decode().split("\n"):
-        if 'gpu_prefix_cache_hit_rate' in line:
+        if 'cache_hit_rate' in line:
             hit_ratios.append(line.split()[-1])
     
     with open(f'{DIR}/configs/config_{result_filename}', 'w') as fp:
@@ -168,5 +164,4 @@ async def main():
     await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
-    # asyncio.run(main())
-    run_server(server_configs[0])
+    asyncio.run(main())

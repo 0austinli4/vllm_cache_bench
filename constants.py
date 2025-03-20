@@ -22,10 +22,9 @@ VLLM_SERVER_CMD_TEMPLATE = (
 SGLANG_SERVER_CMD_TEMPLATE = (
     f"python3 -m sglang.bench_serving "
     f"--model-path {MODEL} "
-    "--host {} "
     "{}"
+    "--enable-metrics "
 )
-
 CLIENT_CMD_TEMPLATE = (
     f"python ~/vllm/benchmarks/benchmark_serving.py --result-dir {DIR} "
     f"--save-result --backend {BACKEND} --model {MODEL} --endpoint /v1/chat/completions "

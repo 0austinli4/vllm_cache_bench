@@ -16,6 +16,9 @@ for alg in ['lru']:
     for size in [0.12]:
         server_configs.append({
             'host': 'localhost', 
+            'eviction_algorithm': alg,
+            'size': size,
+            'port': 8000 + i, 
             'cuda_devices': f'CUDA_VISIBLE_DEVICES={i}',
             'args': (
                 f"--host localhost "

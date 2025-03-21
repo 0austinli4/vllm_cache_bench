@@ -8,7 +8,8 @@ import os
 import re
 from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
 from sglang.test.test_utils import is_in_ci
-from sglang.utils import wait_for_server, print_highlight, terminate_process
+from sglang.utils import wait_for_server, print_highlight, terminate_process, launch_server_cmd
+import sys
 
 server_configs = []
 i = 0
@@ -160,6 +161,44 @@ async def start_exp(server_config, client_configs):
 
     print(f"Saved results to {exp_file}")
 
+def start_simple_test():
+    # Determine the server launch command based on CI status
+    if is_in_ci():
+        from patch import launch_server_cmd
+    else:
+        from sglang.utils import launch_server_cmd
+
+    # Launch the server
+    server_process, port = launch_server_cmd(
+        f"{sys.executable} -m sglang.launch_server --model-path Qwen/Qwen2.5-0.5B --host 0.0.0.0 --enable-metrics"
+    )
+
+    print("Processing running on port ", port)
+
+    # Wait for the server to be ready
+    wait_for_server(f"http://localhost:{port}")
+
+    # Run the benchmarking process
+    bench_process = subprocess.Popen([
+        sys.executable, '-m', 'sglang.bench_serving', 
+        '--backend', 'sglang', 
+        '--dataset-name', 'random', 
+        '--num-prompts', '300', 
+        '--random-input', '1024', 
+        '--random-output', '1024', 
+        '--random-range-ratio', '0.5'
+    ])
+
+    # Wait for both processes to complete
+    try:
+        bench_process.wait(timeout=600)  # 10-minute timeout
+    except subprocess.TimeoutExpired:
+        print("Benchmarking process timed out")
+        bench_process.terminate()
+
+    # Terminate the server process
+    terminate_process(server_process)
+
 async def main():
     # Stop any running server on this node.
     kill_server(server_configs[0]['host'])
@@ -167,4 +206,5 @@ async def main():
     await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    # asyncio.run(main())
+    start_simple_test()

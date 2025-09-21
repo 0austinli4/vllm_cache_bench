@@ -10,11 +10,16 @@ from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
 from sglang.test.test_utils import is_in_ci
 from sglang.utils import wait_for_server, print_highlight, terminate_process, launch_server_cmd
 import sys
+import requests
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from typing import Optional
+import os
+from tqdm import tqdm
 
 server_configs = []
 i = 0
 for alg in ['lru']:
-    for size in [0.12]:
+    for size in [0.02]:
         server_configs.append({
             'host': 'localhost', 
             'eviction_algorithm': alg,
@@ -23,39 +28,54 @@ for alg in ['lru']:
             'cuda_devices': f'CUDA_VISIBLE_DEVICES={i}',
             'args': (
                 f"--host localhost "
-                f"--port {8000 + i} "
-            )
+                f"--port {8000 + i}"
+            ),
+            'total_tokens': 0
         })
         i += 1
 
 dataset = 'sharegpt'
-dataset_file = '~/ShareGPT_V3_unfiltered_cleaned_split.json'
-# prompts = 100000
+dataset_file = '/scratch/gpfs/al2926/.cache/huggingface/ShareGPT_V3_unfiltered_cleaned_split.json'
+dataset_tay = '/home/al2926/vllm_cache_bench/sglang_tay.json'
+
 client_configs = [
     {
-        'num_prompts': 1000, 
-        'request_rate': 0.1,
+        'num_prompts': 10, 
+        'request_rate': 0.08,
     }
 ]
 
 def run_server(server_config):
-    """Start the server with specified parallel sizes."""
-    log_file_name = f"{LOG_FILE}_{server_config['port']}_{server_config['eviction_algorithm']}.log"
-    server_cmd = SGLANG_SERVER_CMD_TEMPLATE.format(server_configs[0]['args'])
-    print('\n', server_cmd, '\n')
-    ssh_command = (
-        f"ssh {server_config['host']} \""
-        # f"source /opt/conda/etc/profile.d/conda.sh && "  # Ensure Conda is sourced
-        # f"conda activate pytorch && "  # Activate the environment
-        # launch server
-        f"{server_config['cuda_devices']} {server_cmd}\""
+    if is_in_ci():
+        from patch import launch_server_cmd
+    else:
+        from sglang.utils import launch_server_cmd
+
+    # Launch the server
+    # --mem-fraction-static 0.5 
+    # --max-running-requests 2 
+    # --max-total-tokens 1000000
+    # --mem-fraction-static {server_config[size]} 
+    print("RUNNING WITH TOKEN NUMBER: ", server_config['total_tokens'], server_config['alg'])
+    # --max-total-tokens {server_config['total_tokens']}
+    server_process, port = launch_server_cmd(
+        f"{sys.executable} -m sglang.launch_server --model-path /scratch/gpfs/al2926/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775 --host 0.0.0.0 --chunked-prefill-size -1 --decode-log-interval 500 --enable-metrics --disable-outlines-disk-cache"
     )
+
+    # sys.executable
+    print("Server running on port", port)
+    server_config['port'] = port
+    log_file_name = f"{LOG_FILE}_{server_config['port']}_{server_config['eviction_algorithm']}.log"
+    
     with open(log_file_name, "w") as log_file:
-        process = subprocess.Popen(ssh_command, shell=True, stdout=log_file, stderr=log_file)
+        log_file.write(f"Log file created for port {server_config['port']} with eviction algorithm {server_config['eviction_algorithm']}.\n")
+    
+    # Wait for the server to be ready
+    wait_for_server(f"http://localhost:{port}")
 
     return log_file_name
 
-def wait_for_server_ready(log_file_name, timeout=60):
+def wait_for_server_ready(log_file_name, timeout=150):
     """Wait until the server is ready or a timeout occurs."""
     for _ in range(timeout):
         if os.path.exists(log_file_name):
@@ -81,17 +101,12 @@ async def run_client(client_config, server_config):
     prefix = get_file_name(server_config)
     result_filename = f"{prefix}.json"
     
-    # Extract host directly from the dictionary.
+    # Extract host/port directly from the dictionary.
     host = server_config["host"]
-    
-    # Extract the port from the 'args' string.
-    port_match = re.search(r'--port\s+(\d+)', server_config["args"])
-    if not port_match:
-        raise ValueError("Port not found in server configuration 'args'.")
-    port = port_match.group(1)
+    port = server_config['port']
     
     client_cmd = CLIENT_CMD_TEMPLATE.format(
-        dataset_file, dataset, host, port, result_filename, num_prompts, request_rate
+        dataset_tay, dataset, host, port, result_filename, num_prompts, request_rate
     )
     print("Running client command:", client_cmd)
     
@@ -108,11 +123,11 @@ async def run_client(client_config, server_config):
 
     ## do it by std out of stats
     for line in stdout.decode().split("\n"):
-        if 'cache_hit_rate' in line:
+        if 'cache_hit_rate' in line and len(line.split()) > 0 and line.split()[0] != "#":
             hit_ratios.append(line.split()[-1])
     
-    with open(f'{DIR}/configs/config_{result_filename}', 'w') as fp:
-        json.dump([client_config, server_config], fp)
+    # with open(f'{DIR}/configs/config_{result_filename}', 'w') as fp:
+    #     json.dump([client_config, server_config], fp)
     print('\n' + client_cmd + '\n')
     result = {'hit_ratios': hit_ratios}
     for k in ['eviction_algorithm', 'size']:
@@ -124,80 +139,41 @@ async def run_client(client_config, server_config):
 async def start_server(server_config):
     # Launch the server and wait for it to be ready.
     log_file_name = await asyncio.to_thread(run_server, server_config)
-    print("wait_for_server_ready:", log_file_name)
     is_ready = await asyncio.to_thread(wait_for_server_ready, log_file_name)
     return is_ready, log_file_name
 
 async def start_exp(server_config, client_configs):
-    print("Starting server configuration:", server_config)
+    print("Starting server configuration")
     is_ready, log_file_name = await start_server(server_config)
     
-    results = []
-    for client_config in client_configs:
-        result = await run_client(client_config, server_config)
-        results.append(result)
+    # results = []
+    # for client_config in client_configs:
+    #     result = await run_client(client_config, server_config)
+    #     results.append(result)
 
-    # Save results to `exp.json` in append mode
-    exp_file = f"{DIR}/exp.json"
+    # # Save results to `exp.json` in append mode
+    # exp_file = f"{DIR}/lru_results.json"
     
-    # Load existing data if the file exists
-    if os.path.exists(exp_file):
-        with open(exp_file, "r") as fp:
-            try:
-                existing_data = json.load(fp)
-                if not isinstance(existing_data, list):
-                    existing_data = []  # Reset if data is corrupted
-            except json.JSONDecodeError:
-                existing_data = []  # Reset if file is empty or corrupted
-    else:
-        existing_data = []
+    # # Load existing data if the file exists
+    # if os.path.exists(exp_file):
+    #     with open(exp_file, "r") as fp:
+    #         try:
+    #             existing_data = json.load(fp)
+    #             if not isinstance(existing_data, list):
+    #                 existing_data = []  # Reset if data is corrupted
+    #         except json.JSONDecodeError:
+    #             existing_data = []  # Reset if file is empty or corrupted
+    # else:
+    #     existing_data = []
 
-    # Append new results
-    existing_data.extend(results)
+    # # Append new results
+    # existing_data.extend(results)
 
     # Write back to the file
-    with open(exp_file, "w") as fp:
-        json.dump(existing_data, fp, indent=4)
+    # with open(exp_file, "w") as fp:
+    #     json.dump(existing_data, fp, indent=4)
 
-    print(f"Saved results to {exp_file}")
-
-def start_simple_test():
-    # Determine the server launch command based on CI status
-    if is_in_ci():
-        from patch import launch_server_cmd
-    else:
-        from sglang.utils import launch_server_cmd
-
-    # Launch the server
-    server_process, port = launch_server_cmd(
-        f"{sys.executable} -m sglang.launch_server --model-path Qwen/Qwen2.5-0.5B --host 0.0.0.0 --enable-metrics"
-    )
-
-    print("Processing running on port ", port)
-
-    # Wait for the server to be ready
-    wait_for_server(f"http://localhost:{port}")
-
-    # Run the benchmarking process
-    bench_process = subprocess.Popen([
-        sys.executable, '-m', 'sglang.bench_serving', 
-        '--backend', 'sglang', 
-        '--dataset-name', 'random', 
-        '--num-prompts', '300', 
-        '--random-input', '1024', 
-        '--random-output', '1024', 
-        '--random-range-ratio', '0.5'
-    ])
-
-    # Wait for both processes to complete
-    try:
-        bench_process.wait(timeout=600)  # 10-minute timeout
-    except subprocess.TimeoutExpired:
-        print("Benchmarking process timed out")
-        bench_process.terminate()
-
-    # Terminate the server process
-    terminate_process(server_process)
+    # print(f"Saved results to {exp_file}")
 
 async def main():
     # Stop any running server on this node.
@@ -205,6 +181,26 @@ async def main():
     tasks = [start_exp(server_config, client_configs) for server_config in server_configs]
     await asyncio.gather(*tasks)
 
+# execute the rest of the script using myparam
 if __name__ == "__main__":
-    # asyncio.run(main())
-    start_simple_test()
+    alg = sys.argv[1]
+    asyncio.run(main())
+    
+    from transformers import AutoTokenizer, AutoModelForCausalLM
+    # /scratch/gpfs/al2926/hf_models
+    model_path = "/scratch/gpfs/al2926/hf_models/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    model = AutoModelForCausalLM.from_pretrained(model_path)
+    messages = [
+        {"role": "user", "content": "Who are you?"},
+    ]
+    inputs = tokenizer.apply_chat_template(
+        messages,
+        add_generation_prompt=True,
+        tokenize=True,
+        return_dict=True,
+        return_tensors="pt",
+    ).to(model.device)
+
+    outputs = model.generate(**inputs, max_new_tokens=40)
+    print(tokenizer.decode(outputs[0][inputs["input_ids"].shape[-1]:]))

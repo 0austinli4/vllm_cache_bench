@@ -10,6 +10,8 @@ LOG_FILE = f"{DIR}/vllm"
 os.makedirs(f'{DIR}/configs', exist_ok=True)
 os.makedirs(f'{DIR}/metrics', exist_ok=True)
 
+SHAREGPT_URL = "https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered/resolve/main/ShareGPT_V3_unfiltered_cleaned_split.json"
+
 VLLM_SERVER_CMD_TEMPLATE = (
     # "/usr/local/bin/nsys profile -o /tmp/0.nsys-rep -w true -t cuda,nvtx,osrt,cudnn,cublas 
     # -s cpu -f true -x false --duration=120 --cuda-graph-trace node "
@@ -25,6 +27,7 @@ SGLANG_SERVER_CMD_TEMPLATE = (
     "{}"
     "--enable-metrics "
 )
+
 CLIENT_CMD_TEMPLATE = (
     f"python ~/vllm/benchmarks/benchmark_serving.py --result-dir {DIR} "
     f"--save-result --backend {BACKEND} --model {MODEL} --endpoint /v1/chat/completions "
@@ -32,7 +35,7 @@ CLIENT_CMD_TEMPLATE = (
     "--result-filename {} --num-prompts {} --request-rate {}"
 )
 
-SERVER_READY_PATTERN = r"startup complete"
+SERVER_READY_PATTERN = r"Log file created"
 CUDA_OOM_PATTERN = r"CUDA out of memory"
 ERROR_PATTERN = r"!error!"
 RAISE_PATTERN = r"raise"

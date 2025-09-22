@@ -1,6 +1,7 @@
 import os
 
-MODEL = "Qwen/Qwen2.5-0.5B" # "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B" # 'Qwen/Qwen2.5-32B'
+MODEL_DIR = "/scratch/gpfs/al2926/hf_models/"
+MODEL = "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B/"
 DIR = f"results/{MODEL.split('/')[-1]}"
 if not os.path.exists(DIR):
     os.makedirs(DIR)

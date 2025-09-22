@@ -10,7 +10,7 @@ from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
 
 server_configs = []
 i = 0
-for alg in ['lruml', 'lru']:
+for alg in ['lru']:
     for size in [0.12, 0.1225, 0.125, 0.1275]:
         server_configs.append({'host': 'localhost', 
             'cuda_devices': f'CUDA_VISIBLE_DEVICES={i}',
@@ -19,24 +19,16 @@ for alg in ['lruml', 'lru']:
             'size': size,
             'args': f'--gpu_memory_utilization {size} '
             f' --pipeline-parallel-size 1 --port {8000+i} '       
-            f' --eviction_algorithm {alg} --block_size=16'})
+            f' --block_size=16'})
         i += 1
 
-dataset = 'sharegpt'
-dataset_file = '~/ShareGPT_V3_unfiltered_cleaned_split.json'
+dataset = 'math500'
+dataset_file = ''
 client_configs = [
     {
-        'num_prompts': 100000,
+        'num_prompts': 10,
         'request_rate': 0.1,
     },
-    {
-        'num_prompts': 100000,
-        'request_rate': 0.05,
-    },
-    {
-        'num_prompts': 100000,
-        'request_rate': 0.025,
-    }
 ]
 
 def run_server(server_config):

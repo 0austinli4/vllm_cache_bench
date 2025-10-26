@@ -7,7 +7,6 @@ import argparse
 from utils import kill_server
 import os
 import re
-import aiohttp
 from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
 import sys
 from pathlib import Path
@@ -16,34 +15,35 @@ import csv
 
 server_configs = []
 i = 0
-for alg in ['lru']:
-    for size in [0.8]:
-        server_configs.append({
-            'host': 'localhost',
-            'cuda_devices': f'CUDA_VISIBLE_DEVICES={i}',
-            'eviction_algorithm': alg,
-            'port': 8000+i,
-            'size': size,
-            'args': (
-                f"--gpu_memory_utilization {size} "
-                f"--pipeline-parallel-size 1 --port {8000+i} "
-                f"--block_size=16 --max-num-batched-tokens 4096"
-            )
-        })
-        i += 1
+for size in [0.8]:
+    server_configs.append({
+        'host': 'localhost',
+        'cuda_devices': f'CUDA_VISIBLE_DEVICES={i}',
+        'port': 8000+i,
+        'gpu_memory_utilization': size,
+        'args': (
+            f"--gpu_memory_utilization {size} "
+            f"--pipeline-parallel-size 1 --port {8000+i} "
+            f"--block_size=16 --max-num-batched-tokens 16384"
+        )
+    })
+    i += 1
         
-dataset_file = '~/vllm_cache_bench/AIME25_benchmark.json'
+dataset_file = 'AIME25_benchmark.json'
+# Ground truth answers are in AIME25.jsonl (for accuracy checking)
+answers_file = 'AIME25.jsonl'
 client_configs = [
     {
-        'num_prompts': 20,
-        'request_rate': 4,
+        'num_prompts': 30,
+        'request_rate': 0.1,
     },
 ]
 
 def run_server(server_config):
     """Start the server with specified parallel sizes."""
-    log_file_name = f"{LOG_FILE}_{server_config['port']}_{server_config['eviction_algorithm']}.log"
-    server_cmd = VLLM_SERVER_CMD_TEMPLATE.format(server_config['args'])
+    from constants import MODEL
+    log_file_name = f"{LOG_FILE}_{server_config['port']}.log"
+    server_cmd = VLLM_SERVER_CMD_TEMPLATE.format(model=MODEL, args=server_config['args'])
     print('\n', server_cmd, '\n')
 
     # Combine CUDA device settings with the actual server command
@@ -75,69 +75,39 @@ def get_file_name(server_config):
     return str(int(time.time()))
 
 
-async def get_queue_metrics(host, port):
-    """Fetch queue time metrics from vLLM's Prometheus endpoint."""
-    metrics_url = f"http://{host}:{port}/metrics"
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(metrics_url) as response:
-                if response.status == 200:
-                    metrics_text = await response.text()
-                    queue_metrics = {}
-                    
-                    # Parse relevant queue metrics
-                    for line in metrics_text.split('\n'):
-                        if 'time_in_queue_requests' in line and not line.startswith('#'):
-                            parts = line.split()
-                            if len(parts) >= 2:
-                                metric_name = parts[0]
-                                metric_value = float(parts[1])
-                                queue_metrics[metric_name] = metric_value
-                        elif 'request_queue_time_seconds' in line and not line.startswith('#'):
-                            parts = line.split()
-                            if len(parts) >= 2:
-                                metric_name = parts[0]
-                                metric_value = float(parts[1])
-                                queue_metrics[metric_name] = metric_value
-                    
-                    return queue_metrics
-                else:
-                    print(f"Failed to fetch metrics: {response.status}")
-                    return {}
-    except Exception as e:
-        print(f"Error fetching queue metrics: {e}")
-        return {}
 
 async def run_client(client_config, server_config, args=None, budgets_file=None):
     num_prompts = client_config['num_prompts']
     request_rate = client_config['request_rate']
     prefix = get_file_name(server_config)
     result_filename = f"{prefix}.json"
-    
+
     # Extract host directly from the dictionary.
     host = server_config["host"]
-    
+
     # Extract the port from the 'args' string.
     port_match = re.search(r'--port\s+(\d+)', server_config["args"])
     if not port_match:
         raise ValueError("Port not found in server configuration 'args'.")
     port = port_match.group(1)
-    
-    # Get baseline queue metrics before benchmark
-    baseline_queue_metrics = await get_queue_metrics(host, port)
-    
+
     # Create stdout file path for this experiment
     stdout_file = f"{DIR}/answers/stdout_{result_filename}.txt"
-    
+
     client_cmd = CLIENT_CMD_TEMPLATE.format(
         dataset_file, host, port, result_filename, num_prompts, request_rate, stdout_file
     )
-    # If a budgets file is provided, append it to the client command so
-    # the benchmark client will attach per-request token budgets.
+
+    # Always use problem_indices.csv to track problem IDs in stdout
+    # If a budgets file is also provided, it will override this
+    indices_file = "problem_indices.csv"
     if budgets_file:
         client_cmd = client_cmd + f" --budgets-file {budgets_file}"
+    elif os.path.exists(indices_file):
+        client_cmd = client_cmd + f" --budgets-file {indices_file}"
+
     print("Running client command:", client_cmd)
-    
+
     # Use asyncio's subprocess shell to run the client command asynchronously.
     process = await asyncio.create_subprocess_shell(
         client_cmd,
@@ -147,34 +117,59 @@ async def run_client(client_config, server_config, args=None, budgets_file=None)
     stdout, stderr = await process.communicate()
     print("Client stdout:", stdout.decode())
     print("Client stderr:", stderr.decode())
-    
-    # Get final queue metrics after benchmark
-    final_queue_metrics = await get_queue_metrics(host, port)
-    
-    hit_ratios = []
-    for line in stdout.decode().split("\n"):
-        if 'gpu_prefix_cache_hit_rate' in line:
-            hit_ratios.append(line.split()[-1])
-    
+
+    # Save config for reference
     with open(f'{DIR}/configs/config_{result_filename}', 'w') as fp:
         json.dump([client_config, server_config], fp)
     print('\n' + client_cmd + '\n')
-    result = {'hit_ratios': hit_ratios}
-    
-    # Calculate queue metrics differences (metrics from this benchmark run)
-    queue_metrics_diff = {}
-    for key in final_queue_metrics:
-        if key in baseline_queue_metrics:
-            queue_metrics_diff[key] = final_queue_metrics[key] - baseline_queue_metrics[key]
-        else:
-            queue_metrics_diff[key] = final_queue_metrics[key]
-    
-    result['queue_metrics'] = queue_metrics_diff
-    
-    for k in ['eviction_algorithm', 'size']:
-        result[k] = server_config[k]
-    for k in client_config.keys():
-        result[k] = client_config[k]
+
+    # Read the benchmark result JSON file that was created by benchmark_serving.py
+    benchmark_result_path = f"{DIR}/{result_filename}"
+    benchmark_data = {}
+    if os.path.exists(benchmark_result_path):
+        with open(benchmark_result_path, 'r') as fp:
+            benchmark_data = json.load(fp)
+
+    # Extract token usage metrics
+    output_lens = benchmark_data.get('output_lens', [])
+    total_output_tokens = sum(output_lens)
+    avg_tokens_per_problem = total_output_tokens / len(output_lens) if output_lens else 0
+
+    # Compute accuracy by comparing generated outputs to expected answers
+    from verify_outputs import load_jsonl, answers_match
+
+    generated_texts = benchmark_data.get('generated_texts', [])
+    # Load ground truth answers from answers_file (test.jsonl)
+    test_data = load_jsonl(answers_file)
+
+    correct = 0
+    total = min(len(generated_texts), len(test_data), num_prompts)
+
+    for i in range(total):
+        expected = test_data[i].get('answer', '')
+        generated = generated_texts[i] if i < len(generated_texts) else ''
+        is_match, _ = answers_match(expected, generated)
+        if is_match:
+            correct += 1
+
+    accuracy = correct / total if total > 0 else 0.0
+
+    # Build result dictionary with relevant metrics
+    result = {
+        'num_prompts': num_prompts,
+        'request_rate': request_rate,
+        'accuracy': accuracy,
+        'correct': correct,
+        'total': total,
+        'total_output_tokens': total_output_tokens,
+        'avg_tokens_per_problem': avg_tokens_per_problem,
+        'output_lens': output_lens,  # Per-problem token counts
+        'budget_mode': 'budgeted' if budgets_file else 'unbounded',
+    }
+
+    if budgets_file:
+        result['budgets_file'] = budgets_file
+
     return result
 
 async def start_server(server_config):
@@ -184,18 +179,80 @@ async def start_server(server_config):
     is_ready = await asyncio.to_thread(wait_for_server_ready, log_file_name)
     return is_ready
 
+async def verify_latest_run(use_unique_id=True):
+    """
+    Verify the latest benchmark run's outputs against ground truth.
+    Returns tuple: (correct_count, total_count, report_path)
+    """
+    answers_dir = Path(DIR) / 'answers'
+    pattern = str(answers_dir / 'stdout_*.txt')
+    candidates = sorted(glob.glob(pattern), key=os.path.getmtime)
+    if not candidates:
+        print(f"⚠️  No stdout files found in {answers_dir} to verify")
+        return 0, 0, None
+
+    latest_stdout = candidates[-1]
+    timestamp = int(time.time())
+    report_path = Path(DIR) / f'verify_report_{timestamp}.csv'
+
+    print(f"\n{'='*60}")
+    print(f"🔍 VERIFYING OUTPUTS")
+    print(f"{'='*60}")
+    print(f"Stdout file:  {latest_stdout}")
+    print(f"Ground truth: {answers_file}")
+    print(f"Report:       {report_path}")
+    print()
+
+    ret = subprocess.run([
+        sys.executable,
+        str(Path(__file__).parent / 'verify_outputs.py'),
+        '--stdout-file', latest_stdout,
+        '--test-jsonl', str(Path(__file__).parent / answers_file),
+        '--out', str(report_path)
+    ], capture_output=True, text=True)
+
+    if ret.returncode != 0:
+        print(f"❌ Verification failed!")
+        print(ret.stderr)
+        return 0, 0, None
+
+    # Parse verification output to get counts
+    output = ret.stdout
+    print(output)
+
+    # Extract correct/total from output like "✅ Compared 31 items: 6 correct (19.4%)"
+    match = re.search(r'Compared (\d+) items: (\d+) correct', output)
+    if match:
+        total = int(match.group(1))
+        correct = int(match.group(2))
+        return correct, total, str(report_path)
+
+    return 0, 0, str(report_path)
+
 async def start_exp(server_config, client_configs, args=None, budgets_file=None):
     print("Starting server configuration:", server_config)
     await start_server(server_config)
-    
+
     results = []
     for client_config in client_configs:
         result = await run_client(client_config, server_config, args=args, budgets_file=budgets_file)
         results.append(result)
 
+        # Print summary for this run
+        print("\n" + "="*60)
+        print(f"RESULTS SUMMARY")
+        print("="*60)
+        print(f"Accuracy:              {result['correct']}/{result['total']} ({result['accuracy']*100:.1f}%)")
+        print(f"Total output tokens:   {result['total_output_tokens']}")
+        print(f"Avg tokens/problem:    {result['avg_tokens_per_problem']:.1f}")
+        print(f"Mode:                  {result['budget_mode']}")
+        if budgets_file:
+            print(f"Budget file:           {result.get('budgets_file', 'N/A')}")
+        print("="*60 + "\n")
+
     # Save results to `exp.json` in append mode
     exp_file = f"{DIR}/exp.json"
-    
+
     # Load existing data if the file exists
     if os.path.exists(exp_file):
         with open(exp_file, "r") as fp:
@@ -217,11 +274,15 @@ async def start_exp(server_config, client_configs, args=None, budgets_file=None)
 
     print(f"Saved results to {exp_file}")
 
+    # Return the last result for verification purposes
+    return results[-1] if results else None
+
 async def main(args):
     # Stop any running server first
     kill_server(server_configs[0]['host'])
 
     budgets_file_to_pass = None
+    ran_experiment = False  # Track if we ran any experiments
 
     # === DRY RUN ===
     if args.dry_run:
@@ -231,8 +292,8 @@ async def main(args):
             for server_config in server_configs
         ]
         await asyncio.gather(*tasks)
+        ran_experiment = True
         print("Dry run complete. You can now compute token budgets with --compute-budgets.")
-        return
 
     # === COMPUTE BUDGETS ===
     if args.compute_budgets:
@@ -285,29 +346,37 @@ async def main(args):
             for server_config in server_configs
         ]
         await asyncio.gather(*tasks)
+        ran_experiment = True
 
-    # === VERIFY OUTPUTS ===
-    if args.verify_after:
-        answers_dir = Path(DIR) / 'answers'
-        pattern = str(answers_dir / 'stdout_*.txt')
-        candidates = sorted(glob.glob(pattern), key=os.path.getmtime)
-        if not candidates:
-            print(f"No stdout files found in {answers_dir} to verify")
-            return
-        latest_stdout = candidates[-1]
-        print(f"Running verification against {latest_stdout}")
-        report_path = Path(DIR) / 'verify_report.csv'
-        ret = subprocess.run([
-            sys.executable,
-            str(Path(__file__).parent / 'verify_outputs.py'),
-            '--stdout-file', latest_stdout,
-            '--test-jsonl', str(Path(__file__).parent / 'test.jsonl'),
-            '--out', str(report_path)
-        ])
-        if ret.returncode != 0:
-            print('verify_outputs.py failed')
-        else:
-            print(f'Verification report written to {report_path}')
+    # === ALWAYS VERIFY OUTPUTS AFTER ANY EXPERIMENT ===
+    if ran_experiment:
+        correct, total, report_path = await verify_latest_run()
+
+        # Print final verification summary
+        if total > 0:
+            accuracy_pct = (correct / total) * 100
+            print(f"\n{'='*60}")
+            print(f"📊 FINAL VERIFICATION RESULTS")
+            print(f"{'='*60}")
+            print(f"✅ Correct:   {correct}/{total} ({accuracy_pct:.1f}%)")
+            print(f"❌ Incorrect: {total - correct}/{total} ({100 - accuracy_pct:.1f}%)")
+            if report_path:
+                print(f"📄 Report:    {report_path}")
+            print(f"{'='*60}\n")
+
+    # === MANUAL VERIFY (if --verify-after flag is used without running experiments) ===
+    elif args.verify_after:
+        correct, total, report_path = await verify_latest_run()
+        if total > 0:
+            accuracy_pct = (correct / total) * 100
+            print(f"\n{'='*60}")
+            print(f"📊 VERIFICATION RESULTS")
+            print(f"{'='*60}")
+            print(f"✅ Correct:   {correct}/{total} ({accuracy_pct:.1f}%)")
+            print(f"❌ Incorrect: {total - correct}/{total} ({100 - accuracy_pct:.1f}%)")
+            if report_path:
+                print(f"📄 Report:    {report_path}")
+            print(f"{'='*60}\n")
 
 
 if __name__ == "__main__":

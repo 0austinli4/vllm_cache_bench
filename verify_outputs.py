@@ -37,22 +37,36 @@ def load_jsonl(path):
 def load_model_outputs(path):
     """
     Extract answers from the model's output file.
-    This version looks for text inside \\boxed{} first; if not found, uses the last number-like token.
+    Parses the === Request Output === format from benchmark_serving.py stdout.
+    Returns list of (generated_text, unique_id) tuples.
     """
     outputs = []
     text = Path(path).read_text(encoding="utf-8")
 
-    # Try to split on boxed answers if available
-    boxed = re.findall(r"\\boxed\{([^}]*)\}", text)
-    if boxed:
-        outputs = [b.strip() for b in boxed]
-    else:
-        # fallback: take non-empty lines that look like answers
-        for line in text.splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            outputs.append(line)
+    # Split by request output blocks
+    blocks = re.split(r"=+ Request Output =+", text)
+
+    for block in blocks:
+        if not block.strip():
+            continue
+
+        # Extract unique_id or index
+        unique_id_match = re.search(r"Unique id:\s*(.+)", block)
+        if unique_id_match:
+            unique_id = unique_id_match.group(1).strip()
+            if unique_id == "None":
+                unique_id = None
+        else:
+            # Try to find Index: field as fallback
+            index_match = re.search(r"Index:\s*(\d+)", block)
+            unique_id = index_match.group(1).strip() if index_match else None
+
+        # Extract generated text
+        gen_match = re.search(r"Generated text:\s*(.+?)(?=\nActual tokens|$)", block, re.DOTALL)
+        if gen_match:
+            generated_text = gen_match.group(1).strip()
+            outputs.append((generated_text, unique_id))
+
     return outputs
 
 def normalize(s):
@@ -112,32 +126,74 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--stdout-file", required=True)
     ap.add_argument("--test-jsonl", required=True)
-    ap.add_argument("--out", default="verify_report.csv")
+    ap.add_argument("--out", default=None)
     args = ap.parse_args()
+
+    # Infer results directory from stdout-file path
+    stdout_path = Path(args.stdout_file)
+    if args.out is None:
+        # Extract results directory (e.g., results/9216db5781bf21249d130ec9da846c4624c16137)
+        # stdout_file is typically: results/{model}/answers/stdout_*.txt
+        if "results" in stdout_path.parts:
+            results_idx = stdout_path.parts.index("results")
+            if len(stdout_path.parts) > results_idx + 1:
+                results_dir = Path(*stdout_path.parts[:results_idx+2])
+                metrics_dir = results_dir / "metrics"
+                metrics_dir.mkdir(parents=True, exist_ok=True)
+                args.out = str(metrics_dir / "verify_report.csv")
+            else:
+                args.out = "verify_report.csv"
+        else:
+            args.out = "verify_report.csv"
 
     tests = load_jsonl(args.test_jsonl)
     outputs = load_model_outputs(args.stdout_file)
 
     rows = []
-    total = min(len(tests), len(outputs))
+    total = len(outputs)
     matches = 0
 
-    for i in range(total):
-        exp = tests[i].get("answer", "").strip()
-        got = outputs[i].strip()
+    # Create a map of problem index to expected answer
+    test_map = {}
+    for test in tests:
+        idx = test.get("index")
+        if idx is not None:
+            test_map[idx] = test.get("answer", "").strip()
+
+    for i, (generated_text, unique_id) in enumerate(outputs):
+        # Try to match by unique_id first, otherwise use sequential index
+        if unique_id is not None and unique_id.isdigit():
+            problem_idx = int(unique_id)
+            exp = test_map.get(problem_idx, "")
+        elif i < len(tests):
+            problem_idx = tests[i].get("index", i)
+            exp = tests[i].get("answer", "").strip()
+        else:
+            problem_idx = i
+            exp = ""
+
+        # Extract answer from generated text (look for \boxed{})
+        boxed_match = re.search(r"\\boxed\{([^}]*)\}", generated_text)
+        if boxed_match:
+            got = boxed_match.group(1).strip()
+        else:
+            # Fallback: use the generated text itself (may be truncated)
+            got = generated_text[:100].strip()
+
         ok, note = answers_match(exp, got)
         if ok:
             matches += 1
+
         rows.append({
-            "index": i,
+            "problem_index": problem_idx,
             "expected": exp,
-            "generated": got,
+            "generated": got[:200],  # Truncate for readability
             "match": ok,
             "note": note
         })
 
     with open(args.out, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["index", "expected", "generated", "match", "note"])
+        writer = csv.DictWriter(f, fieldnames=["problem_index", "expected", "generated", "match", "note"])
         writer.writeheader()
         writer.writerows(rows)
 

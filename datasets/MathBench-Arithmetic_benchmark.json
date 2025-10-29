@@ -1,0 +1,3902 @@
+[
+  {
+    "id": "1",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Add together -35947633 and 0.0337."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate (-5456)/6696*(-297)/(-22)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Multiply -0.26 and -330782."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the value of 51/9 + -14 + -3 + 4/1 + -3, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate -7 + -16 + 31 - (-40 + 3 + -5 + 3)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(-123*(-6)/(-54) - -9)*(-75)/(-275), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5 divided by 616968, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 12 - ((-10 - -1) + (19 - (-31 - -10)))."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (-42136)/4122*9*2/(-4)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(15 - (-176)/(-12))*((-192)/(-30) + -7), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-243 * 33182"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (4*(-6)/21 + -11 + 1728/140)*-1, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate -2*22673.75."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (-4*1 + 2)*(0 - (-26 + 777/74))?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (((-1476)/(-615))/(3/50))/(2/1)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-220513777+-599"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate 167 + -123 - (-7 + 34)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (-1)/(-1)*((4563/(-15))/13 - -23)*-125?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 1000804 divided by -500402."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "32 divided by -430524, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate -1 divided by 1255515, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -460236 divided by 6?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -52 - -12.28381745?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "24",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Divide 3 by -868009, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "25",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -87552.7 take away -0.16025?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "26",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "536 + -503 - (-3 - (-1 - 20))"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "27",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 9 + -13 + 1 + -6 + (-14 - 7)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "28",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-41291 times -18.7"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "29",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (2 + 2 - 2)/(-5) - (-23)/((-4600)/7920)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "30",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (4/(-8)*(-32)/4)/(115/(-5)), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "31",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (38 - 49) + -46 + 39."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "32",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "4899/994 + (-1 - 3) - 6/7, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "33",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 32272073652 plus 0.2?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "34",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 2258/47418 + 884/(-42)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "35",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate -65.57 + -1142939.1."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "36",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Multiply -22 and 0.49597."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "37",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate ((2/(-189))/(13/(-117))*-9)/(2/(-14))."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "38",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 5909946 divided by 2954973?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "39",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the value of ((-192)/(-28))/((-84)/(-6174)*-21)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "40",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 160*-9.064."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "41",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (1440/640)/((-1)/(-2) - -1)*96/(-306), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "42",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate 13/((-351)/(-9))*(-6)/(-10)*-2*-35."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "43",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (-1 - -6) + 6 - (16 + (-31 - -61))?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "44",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Work out 0.24 - 14.77954104."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "45",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -19 + -35.556387?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "46",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -9*5/(-20)*8/(-12), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "47",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Subtract -1.501521007 from -0.1."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "48",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-5087*-814"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "49",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate 113/((-332785)/570)*(-1)/(-2), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "50",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate -231*1779."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "51",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Sum -0.1 and -11491311319."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "52",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Multiply 954347 and -12."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "53",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2726932 divided by -229"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "54",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 426/(-1491) - (-220)/(-14)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "55",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -10 + (-5 - -2 - -5) + (0 - -14)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "56",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 13058*-0.998."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "57",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -19533520 divided by 3906704?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "58",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 2 plus -1786522916?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "59",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (48/96)/(276/144), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "60",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2/((-14587)/609 + 24)"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "61",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Sum 0 and -700981.3438."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "62",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 278 + 20372945."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "63",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Divide 4 by 1704532, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "64",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 70943 - 38.084."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "65",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate -3*34*35/3570."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "66",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(-135575)/(-1595)*(-2)/(-10)"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "67",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 1 divided by -4076398, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "68",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (44 - 2 - (-24 + 9 + 16)) + 3?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "69",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -3*52/(-336)*(-3339)/(-477), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "70",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-0.351567*0.3"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "71",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the value of 6 - (8 + 9 + (-5 - -6) + -49 - -9)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "72",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 14 + -12 + (21 - (-22 + -4))?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "73",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -0.178602 take away -57.22?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "74",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (125/(-15) - -7) + (4 - 40/15)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "75",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (-41 - -2) + 30 + 56?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "76",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate (10/50)/(((-140)/(-42))/5*(-6)/940)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "77",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "8505/225 - (-50)/250"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "78",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate (465/(-17298)*(-3)/10)/(1/24*2), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "79",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate -10*((-41)/((-343170)/18))/((-2)/6), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "80",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Put together -3 and -20443241839."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "81",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 3 divided by 1207906, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "82",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate 26*(-10)/13*(-78)/130."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "83",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (-24)/(-32) - (20/60 + (-5 - 4467/(-828))), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "84",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is ((-129)/(-15))/((-906)/(-4530))?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "85",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Divide -18829 by 364, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "86",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Product of -1.2 and 36587."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "87",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Product of 409 and -125.52."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "88",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the product of -5 and -0.0012036?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "89",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Add together 5 and 1167.4402664."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "90",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is ((-1467)/652)/(8/((-64)/(-24))), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "91",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 268377 divided by -55, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "92",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the value of 14883/242*28/(-42)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "93",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Work out -12.17 - 14403515."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "94",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Total of 27720.4921 and 673."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "95",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "1 * 0.487885"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "96",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the distance between 89751.84439 and -0.3?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "97",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 104416/10040*(-10)/(-4)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "98",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(336/128)/((-23)/((-1035)/105)), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "99",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-1 - (9 + -11) - (-9 + 13) - 0 - -28"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "100",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 0.3*-793867."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "101",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (4 - 3 - 7) + 3 + (2 - 6)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "102",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "16 - (6 - (4 - 51))"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "103",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Add together -649.022354 and -209."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "104",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate (-75 - (9 + -11 - 13))/(-3)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "105",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the value of ((-4754)/1526034)/(((-1)/6)/(-1)), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "106",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 22 - 459055.4726?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "107",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (72/(-3528)*-49)/((-1)/19)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "108",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Divide 78 by -76068, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "109",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(-10 - -6) + (8 - (15 - 39))"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "110",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(784/32)/(-49)*(-4)/1"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "111",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -1 divided by 4986181, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "112",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the product of 56397 and -21.6?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "113",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Evaluate ((-44)/(-35)*685/(-274))/(10/(-105)*-3)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "114",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate -5145497473 - -1.7."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "115",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Multiply 339632 and -45."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "116",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Divide 1099295 by 219859."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "117",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate (-36456)/(-1209) + 56/(-364)."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "118",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -405.456 plus -58144?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "119",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the distance between 254.31 and 7058188?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "120",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(33/(-4620)*28)/(30/12*(-4)/25), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "121",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-23 * 0.934175"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "122",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 119240 divided by -7, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "123",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Total of 18419 and -11572.108."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "124",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the difference between 5 and -30934319327?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "125",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-541128 divided by -1"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "126",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -0.2 + 10156627591?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "127",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 7289216 divided by -14696?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "128",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "(-120)/(-15)*408/96"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "129",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-4 + -1 - (-64 + 93 + -84)"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "130",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate -5256762 - -0.911."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "131",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 16817559 divided by 3."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "132",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (25 - (-5 - -9)) + -21 + -6?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "133",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -8 + (21 - 21 - 4) + 49?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "134",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is (-19920)/524 + (-740)/(-48470)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "135",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2328 divided by -3"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "136",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 0.3158 times 0.0092?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "137",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Product of -6 and 3288399."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "138",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is 149913 divided by -6, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "139",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "16 times 118445"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "140",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -42.838 - 498330.8?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "141",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate ((-3)/(-7)*56/(-48))/(-1), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "142",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Sum -207259242 and 3.19."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "143",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Work out -5989 * -1804."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "144",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Work out 171719996 + -0.1."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "145",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the value of -8 - 3 - ((19 - 21) + 23)?"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "146",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "10530.9 * -49"
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "147",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is the value of (8/(-120))/((-8)/(-50))*(-7)/((-28)/6), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "148",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Calculate 1265168 divided by -158146."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "149",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -5*(-17 + (-697)/476*-12), please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "150",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "What is -1 divided by -821424, please return the calculation result in its simplest fraction form."
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "151",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "8+1="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "152",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "10+(-3)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "153",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-6+(-2)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "154",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-1+3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "155",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-7+(-1)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "156",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-4+(-6)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "157",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "10+7="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "158",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5+(-5)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "159",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2+1="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "160",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-1+(-6)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "161",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "4+10="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "162",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "3+6="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "163",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-8+9="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "164",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "9-(-4)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "165",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "9-(-6)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "166",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "1+1="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "167",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5+9="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "168",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "4+3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "169",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5+2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "170",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "9+2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "171",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "6+2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "172",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0+8="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "173",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0+10="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "174",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "9+3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "175",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "6+6="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "176",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5+6="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "177",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5+4="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "178",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5+0="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "179",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5-1="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "180",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2-2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "181",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "65+82="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "182",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "57+70="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "183",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "53+27="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "184",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "8+56="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "185",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "21+97="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "186",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "28+34="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "187",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "39+46="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "188",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "34+61="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "189",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2+4="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "190",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "69+6="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "191",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "16+73="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "192",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "16+59="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "193",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "26+10="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "194",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "97-82="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "195",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "91-12="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "196",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "184+44="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "197",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "459+315="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "198",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "461+822="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "199",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "64+185="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "200",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "116+16="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "201",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "243+281="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "202",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "501+515="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "203",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "636+766="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "204",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "870+97="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "205",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "672+483="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "206",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "701+70="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "207",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "13+934="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "208",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "345+502="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "209",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "35-846="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "210",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "721-847="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "211",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "221034337578+352470528397="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "212",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "946195468138+987210728275="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "213",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "678420482144+26140223017="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "214",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "234319923293+171632577931="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "215",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "936913097197+52653430976="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "216",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "623690866796+368029869233="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "217",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "352860887460+79374684075="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "218",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "72194749716+960193174801="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "219",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "786403083014+675944857940="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "220",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "774426524175+721318944497="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "221",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "485625085111+960366573672="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "222",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "892325753741+494303803604="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "223",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "509059009811+621706279712="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "224",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "979442624617-98210807692="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "225",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "373490079876-646750175965="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "226",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2**3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "227",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "3^3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "228",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "4^2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "229",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "10**3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "230",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "1^3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "231",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "1**3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "232",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "7^4="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "233",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "2^2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "234",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "8**4="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "235",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "7^4="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "236",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "3**2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "237",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "3^4="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "238",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "1**3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "239",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5^2="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "240",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "9**4="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "241",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "78*64="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "242",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "62×42="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "243",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "37*39="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "244",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "61×20="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "245",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "11×49="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "246",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "44*38="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "247",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "7*8="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "248",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "8×57="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "249",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "20*16="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "250",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "68×63="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "251",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "46*78="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "252",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "38×42="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "253",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "61×72="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "254",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "63×37="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "255",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "58×31="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "256",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "6152×32179="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "257",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "91684*20008="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "258",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "62195*99536="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "259",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5655×42805="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "260",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "4032*84266="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "261",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "35460×26064="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "262",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "92978×28845="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "263",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "51677×90778="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "264",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "9025*95266="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "265",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "61081×44496="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "266",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "38010*88739="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "267",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "90161*91816="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "268",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "45960*59693="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "269",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "68163×81808="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "270",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "41393*30824="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "271",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0.5+0.24="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "272",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0.0069+(-0.86)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "273",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-39.0+(-0.07)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "274",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-0.0089+(-22.0)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "275",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-0.0074+(-0.26)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "276",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-0.038+0.0092="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "277",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "88.0+(-0.54)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "278",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "63.0+0.074="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "279",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-0.0069+3.6="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "280",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-16.0+0.08="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "281",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "64.0+(-0.83)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "282",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-0.0067+0.085="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "283",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-0.099+0.84="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "284",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "-23.0-(-0.43)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "285",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0.054-(-0.045)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "286",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "3.0×6.0="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "287",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0.7*1.0="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "288",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0.1*1.0="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "289",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0.6×4.0="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "290",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "5.0*0.09="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "291",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "0.3×0.3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "292",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "3.0×0.3="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "293",
+    "conversations": [
+      {
+        "from": "human",
+        "value": " ( 14 + 96) * 93 + ( 72 * 23)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "294",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Keep the answer to two decimal places, ( 21 - 43) / 50 + ( 65 - 37)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "295",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Keep the answer to two decimal places, ( 86 + 57) / 43="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "296",
+    "conversations": [
+      {
+        "from": "human",
+        "value": " 22 * ( 6 - 53)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "297",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "Keep the answer to two decimal places, ( 24 + 22) * 18 / 79 = "
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "298",
+    "conversations": [
+      {
+        "from": "human",
+        "value": " ( 47 - 99) * 86 * 99="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "299",
+    "conversations": [
+      {
+        "from": "human",
+        "value": " 16 / 51="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  },
+  {
+    "id": "300",
+    "conversations": [
+      {
+        "from": "human",
+        "value": " 51 - ( 92 - 77)="
+      },
+      {
+        "from": "gpt",
+        "value": "Solution will be generated"
+      }
+    ]
+  }
+]

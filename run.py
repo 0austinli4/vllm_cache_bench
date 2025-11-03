@@ -1,4 +1,5 @@
-from constants import DIR, CLIENT_CMD_TEMPLATE, VLLM_SERVER_CMD_TEMPLATE, SERVER_READY_PATTERN
+from constants import CLIENT_CMD_TEMPLATE, VLLM_SERVER_CMD_TEMPLATE, SERVER_READY_PATTERN
+from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
 import json
 import subprocess
 import time
@@ -7,11 +8,15 @@ import argparse
 from utils import kill_server
 import os
 import re
-from constants import LOG_FILE, CUDA_OOM_PATTERN, ERROR_PATTERN, RAISE_PATTERN
 import sys
 from pathlib import Path
 import glob
 import csv
+
+# Global variables - will be set based on command-line arguments
+DIR = None
+dataset_file = None
+answers_file = None
 
 server_configs = []
 i = 0
@@ -28,21 +33,22 @@ for size in [0.8]:
         )
     })
     i += 1
-        
-dataset_file = 'AIME25_benchmark.json'
-# Ground truth answers are in AIME25.jsonl (for accuracy checking)
-answers_file = 'AIME25.jsonl'
+
 client_configs = [
     {
-        'num_prompts': 30,
-        'request_rate': 0.1,
+        'num_prompts': 10,
+        'request_rate': 0.2,
     },
 ]
 
 def run_server(server_config):
     """Start the server with specified parallel sizes."""
     from constants import MODEL
-    log_file_name = f"{LOG_FILE}_{server_config['port']}.log"
+
+    # Include SLURM job ID in log filename for parallel job isolation
+    slurm_job_id = os.environ.get('SLURM_JOB_ID') or os.environ.get('SLURM_JOBID') or 'local'
+    log_file_name = f"{LOG_FILE}_{server_config['port']}_{slurm_job_id}.log"
+
     server_cmd = VLLM_SERVER_CMD_TEMPLATE.format(model=MODEL, args=server_config['args'])
     print('\n', server_cmd, '\n')
 
@@ -72,7 +78,14 @@ def wait_for_server_ready(log_file_name, timeout=600):
 
 def get_file_name(server_config):
     # Use a simple timestamp for a unique result filename.
-    return str(int(time.time()))
+    # If running under SLURM, append the job ID to ensure uniqueness across concurrent jobs
+    timestamp = str(int(time.time()))
+    slurm_job_id = os.environ.get('SLURM_JOB_ID') or os.environ.get('SLURM_JOBID')
+
+    if slurm_job_id:
+        return f"{timestamp}_{slurm_job_id}"
+    else:
+        return timestamp
 
 
 
@@ -94,23 +107,27 @@ async def run_client(client_config, server_config, args=None, budgets_file=None)
     # Create stdout file path for this experiment
     stdout_file = f"{DIR}/answers/stdout_{result_filename}.txt"
 
+    # Clear the stdout file if it exists to prevent appending from previous runs
+    if os.path.exists(stdout_file):
+        os.remove(stdout_file)
+        print(f"Cleared existing stdout file: {stdout_file}")
+
     client_cmd = CLIENT_CMD_TEMPLATE.format(
         dataset_file, host, port, result_filename, num_prompts, request_rate, stdout_file
     )
 
-    # Always use problem_indices.csv to track problem IDs in stdout
-    # If a budgets file is also provided, it will override this
-    indices_file = "problem_indices.csv"
+    # Add budgets file if provided
     if budgets_file:
         client_cmd = client_cmd + f" --budgets-file {budgets_file}"
-    elif os.path.exists(indices_file):
-        client_cmd = client_cmd + f" --budgets-file {indices_file}"
 
     print("Running client command:", client_cmd)
 
+    # Prepend CUDA device settings to client command to match server environment
+    full_client_cmd = f"{server_config['cuda_devices']} {client_cmd}"
+
     # Use asyncio's subprocess shell to run the client command asynchronously.
     process = await asyncio.create_subprocess_shell(
-        client_cmd,
+        full_client_cmd,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE
     )
@@ -179,14 +196,20 @@ async def start_server(server_config):
     is_ready = await asyncio.to_thread(wait_for_server_ready, log_file_name)
     return is_ready
 
-async def verify_latest_run(use_unique_id=True):
+async def verify_latest_run(use_unique_id=True, budget_file=None):
     """
     Verify the latest benchmark run's outputs against ground truth.
     Returns tuple: (correct_count, total_count, report_path)
+
+    Args:
+        use_unique_id: If True, include timestamp in report filename
+        budget_file: Optional path to budget CSV file for budget-aware verification
     """
     answers_dir = Path(DIR) / 'answers'
     pattern = str(answers_dir / 'stdout_*.txt')
-    candidates = sorted(glob.glob(pattern), key=os.path.getmtime)
+    # Exclude full_output files - they have different format that verify_outputs.py can't parse
+    candidates = [f for f in sorted(glob.glob(pattern), key=os.path.getmtime)
+                  if 'full_output' not in f]
     if not candidates:
         print(f"⚠️  No stdout files found in {answers_dir} to verify")
         return 0, 0, None
@@ -200,16 +223,24 @@ async def verify_latest_run(use_unique_id=True):
     print(f"{'='*60}")
     print(f"Stdout file:  {latest_stdout}")
     print(f"Ground truth: {answers_file}")
+    if budget_file:
+        print(f"Budget file:  {budget_file}")
     print(f"Report:       {report_path}")
     print()
 
-    ret = subprocess.run([
+    cmd = [
         sys.executable,
         str(Path(__file__).parent / 'verify_outputs.py'),
         '--stdout-file', latest_stdout,
         '--test-jsonl', str(Path(__file__).parent / answers_file),
         '--out', str(report_path)
-    ], capture_output=True, text=True)
+    ]
+
+    # Add budget file if provided
+    if budget_file:
+        cmd.extend(['--budget-file', str(budget_file)])
+
+    ret = subprocess.run(cmd, capture_output=True, text=True)
 
     if ret.returncode != 0:
         print(f"❌ Verification failed!")
@@ -278,14 +309,14 @@ async def start_exp(server_config, client_configs, args=None, budgets_file=None)
     return results[-1] if results else None
 
 async def main(args):
-    # Stop any running server first
-    kill_server(server_configs[0]['host'])
-
     budgets_file_to_pass = None
     ran_experiment = False  # Track if we ran any experiments
+    used_budget_file = None  # Track budget file used for verification
 
     # === DRY RUN ===
     if args.dry_run:
+        # Stop any running server before starting experiments
+        kill_server(server_configs[0]['host'])
         print("\n=== DRY RUN: Running benchmark without token budgets ===")
         tasks = [
             start_exp(server_config, client_configs, args=args, budgets_file=None)
@@ -294,6 +325,49 @@ async def main(args):
         await asyncio.gather(*tasks)
         ran_experiment = True
         print("Dry run complete. You can now compute token budgets with --compute-budgets.")
+
+    # === CREATE BUDGETS FROM TOKENS FILE (NEW SIMPLIFIED METHOD) ===
+    if args.create_budgets_from_tokens:
+        if not args.tokens_file:
+            raise SystemExit("Error: --tokens-file is required when using --create-budgets-from-tokens")
+
+        tokens_file = Path(args.tokens_file)
+        if not tokens_file.exists():
+            raise SystemExit(f"Error: Tokens file not found: {tokens_file}")
+
+        # Convert multiplier to percentile name (e.g., 0.5 -> 50)
+        percentile_name = int(args.budget_multiplier * 100)
+        budgets_csv = Path(DIR) / f'budgets_for_client_{percentile_name}.csv'
+
+        print(f"\n=== CREATING BUDGETS FROM TOKENS FILE ===")
+        print(f"Input file:   {tokens_file}")
+        print(f"Multiplier:   {args.budget_multiplier} ({percentile_name}%)")
+        print(f"Output file:  {budgets_csv}")
+
+        with open(tokens_file, 'r', encoding='utf-8') as inf, \
+             open(budgets_csv, 'w', encoding='utf-8', newline='') as outf:
+            reader = csv.DictReader(inf)
+            writer = csv.DictWriter(outf, fieldnames=['id', 'token_budget'])
+            writer.writeheader()
+
+            for row in reader:
+                output_tokens = row.get('output_tokens')
+                problem_id = row.get('id')
+                if output_tokens is None or output_tokens == '' or not problem_id:
+                    continue
+
+                # Multiply by budget multiplier and round to integer
+                token_budget = int(float(output_tokens) * args.budget_multiplier)
+
+                writer.writerow({
+                    'id': problem_id,
+                    'token_budget': token_budget
+                })
+
+        print(f"✅ Budgets file created: {budgets_csv}")
+        print(f"\nTo run with these budgets:")
+        print(f"  python run.py --run-with-budgets --budgets-percentile {percentile_name}")
+        return
 
     # === COMPUTE BUDGETS ===
     if args.compute_budgets:
@@ -321,15 +395,15 @@ async def main(args):
         budgets_csv = Path(DIR) / f'budgets_for_client_{args.budgets_percentile}.csv'
         with open(token_budgets_path, 'r', encoding='utf-8') as inf, open(budgets_csv, 'w', encoding='utf-8', newline='') as outf:
             reader = csv.DictReader(inf)
-            writer = csv.DictWriter(outf, fieldnames=['index', 'unique_id', 'token_budget'])
+            writer = csv.DictWriter(outf, fieldnames=['id', 'token_budget'])
             writer.writeheader()
             for row in reader:
                 tok = row.get(percentile_col)
-                if tok is None or tok == '':
+                problem_id = row.get('id')
+                if tok is None or tok == '' or not problem_id:
                     continue
                 writer.writerow({
-                    'index': row.get('index', ''),
-                    'unique_id': row.get('unique_id', ''),
+                    'id': problem_id,
                     'token_budget': tok
                 })
         print(f"Budgets file written to {budgets_csv}")
@@ -337,6 +411,8 @@ async def main(args):
 
     # === RUN WITH BUDGETS ===
     if args.run_with_budgets or args.budgets_file:
+        # Stop any running server before starting experiments
+        kill_server(server_configs[0]['host'])
         budgets_file_to_pass = args.budgets_file
         if not budgets_file_to_pass:
             budgets_file_to_pass = str(Path(DIR) / f'budgets_for_client_{args.budgets_percentile}.csv')
@@ -347,10 +423,11 @@ async def main(args):
         ]
         await asyncio.gather(*tasks)
         ran_experiment = True
+        used_budget_file = budgets_file_to_pass  # Track for verification
 
     # === ALWAYS VERIFY OUTPUTS AFTER ANY EXPERIMENT ===
     if ran_experiment:
-        correct, total, report_path = await verify_latest_run()
+        correct, total, report_path = await verify_latest_run(budget_file=used_budget_file)
 
         # Print final verification summary
         if total > 0:
@@ -383,10 +460,27 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Run vllm cache benchmark in dry-run, budgeted, or verify mode"
     )
+    # New parameters for dataset and output directory
+    parser.add_argument("--dataset", default="AIME25_benchmark.json",
+                        help="Path to dataset file (e.g., AIME25_benchmark.json)")
+    parser.add_argument("--answers", default=None,
+                        help="Path to answers file (e.g., AIME25.jsonl). If not provided, inferred from dataset name")
+    parser.add_argument("--output-dir", default=None,
+                        help="Output directory for results. If not provided, uses default structure")
+    parser.add_argument("--num-prompts", type=int, default=30,
+                        help="Number of prompts to run (default: 30)")
+
+    # Existing parameters
     parser.add_argument("--dry-run", action="store_true",
                         help="Run without token budgets (collects raw token usage)")
     parser.add_argument("--compute-budgets", action="store_true",
                         help="Compute token budgets from the last dry run's stdout")
+    parser.add_argument("--create-budgets-from-tokens", action="store_true",
+                        help="Create budget file by multiplying output_tokens from a CSV file")
+    parser.add_argument("--tokens-file", default="",
+                        help="Path to CSV file with output_tokens column (for --create-budgets-from-tokens)")
+    parser.add_argument("--budget-multiplier", type=float, default=0.5,
+                        help="Multiplier for output_tokens (e.g., 0.5 for 50%%, 0.75 for 75%%). Default: 0.5")
     parser.add_argument("--run-with-budgets", action="store_true",
                         help="Run again using computed or given token budgets")
     parser.add_argument("--budgets-file", default="",
@@ -396,9 +490,37 @@ if __name__ == "__main__":
     parser.add_argument("--verify-after", action="store_true",
                         help="Verify latest outputs using verify_outputs.py")
 
-    if "SLURM_JOB_ID" in os.environ:
-        parser.set_defaults(compute_budgets=True, verify_after=True)
-
     args = parser.parse_args()
+
+    # Set global variables based on arguments
+    dataset_file = args.dataset
+
+    # Infer answers file if not provided
+    if args.answers:
+        answers_file = args.answers
+    else:
+        # Infer from dataset name (e.g., AIME25_benchmark.json -> AIME25.jsonl)
+        dataset_name = Path(dataset_file).stem
+        if '_benchmark' in dataset_name:
+            dataset_name = dataset_name.replace('_benchmark', '')
+        answers_file = f"{dataset_name}.jsonl"
+
+    # Set output directory
+    if args.output_dir:
+        DIR = args.output_dir
+    else:
+        # Use default: results/{model_id}/{dataset_name}/unbounded
+        from constants import get_results_dir
+        dataset_name = Path(dataset_file).stem.replace('_benchmark', '')
+        DIR = get_results_dir(dataset_name, "unbounded")
+
+    # Create output directories
+    Path(DIR).mkdir(parents=True, exist_ok=True)
+    for subdir in ['answers', 'configs', 'metrics']:
+        (Path(DIR) / subdir).mkdir(exist_ok=True)
+
+    # Update client configs with num_prompts
+    client_configs[0]['num_prompts'] = args.num_prompts
+
     asyncio.run(main(args))
     

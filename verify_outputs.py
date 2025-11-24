@@ -120,6 +120,15 @@ def normalize(s):
     s = re.sub(r"\\boxed\{([^}]*)\}", r"\1", s)
     s = s.replace("\\left", "").replace("\\right", "").replace("\\", "")
     s = re.sub(r"\s+", " ", s)
+    s = s.strip()
+
+    # Clean up malformed extractions from multi-phase generation
+    # Examples: "A}" -> "A", "B}'" -> "B", "C}'," -> "C"
+    # These occur when answer prompt ends with '\boxed{' and model generates closing braces
+    s = re.sub(r'^([A-D])\}[\'",]*$', r'\1', s)  # Single letter with trailing junk
+    s = re.sub(r'^([A-D])\}$', r'\1', s)  # Just closing brace
+    s = re.sub(r'[}\'"]+$', '', s)  # Remove trailing braces/quotes from any answer
+
     return s.strip()
 
 def try_numeric(s):

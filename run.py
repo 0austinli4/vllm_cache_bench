@@ -199,7 +199,7 @@ async def start_server(server_config):
 async def verify_latest_run(use_unique_id=True, budget_file=None):
     """
     Verify the latest benchmark run's outputs against ground truth.
-    Returns tuple: (correct_count, total_count, report_path)
+    Returns tuple: (correct_count, total_count, report_path, overrun_stats)
 
     Args:
         use_unique_id: If True, include timestamp in report filename
@@ -212,7 +212,7 @@ async def verify_latest_run(use_unique_id=True, budget_file=None):
                   if 'full_output' not in f]
     if not candidates:
         print(f"⚠️  No stdout files found in {answers_dir} to verify")
-        return 0, 0, None
+        return 0, 0, None, None
 
     latest_stdout = candidates[-1]
     timestamp = int(time.time())
@@ -245,7 +245,7 @@ async def verify_latest_run(use_unique_id=True, budget_file=None):
     if ret.returncode != 0:
         print(f"❌ Verification failed!")
         print(ret.stderr)
-        return 0, 0, None
+        return 0, 0, None, None
 
     # Parse verification output to get counts
     output = ret.stdout
@@ -256,9 +256,30 @@ async def verify_latest_run(use_unique_id=True, budget_file=None):
     if match:
         total = int(match.group(1))
         correct = int(match.group(2))
-        return correct, total, str(report_path)
+    else:
+        total, correct = 0, 0
 
-    return 0, 0, str(report_path)
+    # Compute budget overrun statistics if budget file was used
+    overrun_stats = None
+    if budget_file and report_path:
+        from compute_budget_overrun_stats import compute_overrun_stats
+        overrun_stats = compute_overrun_stats(str(report_path))
+
+        # Print overrun statistics
+        if overrun_stats['num_overruns'] > 0:
+            print(f"\n{'='*60}")
+            print(f"📊 BUDGET OVERRUN STATISTICS")
+            print(f"{'='*60}")
+            print(f"Total problems:          {overrun_stats['num_total']}")
+            print(f"Budget overruns:         {overrun_stats['num_overruns']} ({overrun_stats['overrun_rate']:.1f}%)")
+            print()
+            print(f"Mean Absolute Error (MAE):       {overrun_stats['mae']:.2f} tokens")
+            print(f"Mean Squared Error (MSE):        {overrun_stats['mse']:.2f}")
+            print(f"Root Mean Squared Error (RMSE):  {overrun_stats['rmse']:.2f} tokens")
+            print(f"Mean Percentage Overrun:         {overrun_stats['mean_pct_overrun']:.1f}%")
+            print(f"{'='*60}\n")
+
+    return correct, total, str(report_path), overrun_stats
 
 async def start_exp(server_config, client_configs, args=None, budgets_file=None):
     print("Starting server configuration:", server_config)
@@ -427,7 +448,7 @@ async def main(args):
 
     # === ALWAYS VERIFY OUTPUTS AFTER ANY EXPERIMENT ===
     if ran_experiment:
-        correct, total, report_path = await verify_latest_run(budget_file=used_budget_file)
+        correct, total, report_path, overrun_stats = await verify_latest_run(budget_file=used_budget_file)
 
         # Print final verification summary
         if total > 0:
@@ -443,7 +464,7 @@ async def main(args):
 
     # === MANUAL VERIFY (if --verify-after flag is used without running experiments) ===
     elif args.verify_after:
-        correct, total, report_path = await verify_latest_run()
+        correct, total, report_path, overrun_stats = await verify_latest_run()
         if total > 0:
             accuracy_pct = (correct / total) * 100
             print(f"\n{'='*60}")
@@ -454,73 +475,91 @@ async def main(args):
             if report_path:
                 print(f"📄 Report:    {report_path}")
             print(f"{'='*60}\n")
-
-
+        
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Run vllm cache benchmark in dry-run, budgeted, or verify mode"
+    from transformers import AutoTokenizer, AutoModelForCausalLM
+
+    cache_dir = "/scratch/gpfs/WLLOYD/al2926/hf_models/BAAI"
+    # daman1209arora/alpha_0.2_DeepSeek-R1-Distill-Qwen-7B
+    # daman1209arora/alpha_0.4_DeepSeek-R1-Distill-Qwen-7B
+    tokenizer = AutoTokenizer.from_pretrained(
+        "BAAI/bge-small-en",
+        cache_dir=cache_dir,
+        trust_remote_code=True
     )
-    # New parameters for dataset and output directory
-    parser.add_argument("--dataset", default="AIME25_benchmark.json",
-                        help="Path to dataset file (e.g., AIME25_benchmark.json)")
-    parser.add_argument("--answers", default=None,
-                        help="Path to answers file (e.g., AIME25.jsonl). If not provided, inferred from dataset name")
-    parser.add_argument("--output-dir", default=None,
-                        help="Output directory for results. If not provided, uses default structure")
-    parser.add_argument("--num-prompts", type=int, default=30,
-                        help="Number of prompts to run (default: 30)")
 
-    # Existing parameters
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Run without token budgets (collects raw token usage)")
-    parser.add_argument("--compute-budgets", action="store_true",
-                        help="Compute token budgets from the last dry run's stdout")
-    parser.add_argument("--create-budgets-from-tokens", action="store_true",
-                        help="Create budget file by multiplying output_tokens from a CSV file")
-    parser.add_argument("--tokens-file", default="",
-                        help="Path to CSV file with output_tokens column (for --create-budgets-from-tokens)")
-    parser.add_argument("--budget-multiplier", type=float, default=0.5,
-                        help="Multiplier for output_tokens (e.g., 0.5 for 50%%, 0.75 for 75%%). Default: 0.5")
-    parser.add_argument("--run-with-budgets", action="store_true",
-                        help="Run again using computed or given token budgets")
-    parser.add_argument("--budgets-file", default="",
-                        help="Path to a precomputed budgets CSV to use in budgeted run")
-    parser.add_argument("--budgets-percentile", type=int, default=50,
-                        help="Percentile column to use when converting token budgets (e.g. 50 for budget_50)")
-    parser.add_argument("--verify-after", action="store_true",
-                        help="Verify latest outputs using verify_outputs.py")
+    model = AutoModelForCausalLM.from_pretrained(
+        "BAAI/bge-small-en",
+        cache_dir=cache_dir,
+        trust_remote_code=True
+    )
 
-    args = parser.parse_args()
 
-    # Set global variables based on arguments
-    dataset_file = args.dataset
+# if __name__ == "__main__":
+#     parser = argparse.ArgumentParser(
+#         description="Run vllm cache benchmark in dry-run, budgeted, or verify mode"
+#     )
+#     # New parameters for dataset and output directory
+#     parser.add_argument("--dataset", default="AIME25_benchmark.json",
+#                         help="Path to dataset file (e.g., AIME25_benchmark.json)")
+#     parser.add_argument("--answers", default=None,
+#                         help="Path to answers file (e.g., AIME25.jsonl). If not provided, inferred from dataset name")
+#     parser.add_argument("--output-dir", default=None,
+#                         help="Output directory for results. If not provided, uses default structure")
+#     parser.add_argument("--num-prompts", type=int, default=30,
+#                         help="Number of prompts to run (default: 30)")
 
-    # Infer answers file if not provided
-    if args.answers:
-        answers_file = args.answers
-    else:
-        # Infer from dataset name (e.g., AIME25_benchmark.json -> AIME25.jsonl)
-        dataset_name = Path(dataset_file).stem
-        if '_benchmark' in dataset_name:
-            dataset_name = dataset_name.replace('_benchmark', '')
-        answers_file = f"{dataset_name}.jsonl"
+#     # Existing parameters
+#     parser.add_argument("--dry-run", action="store_true",
+#                         help="Run without token budgets (collects raw token usage)")
+#     parser.add_argument("--compute-budgets", action="store_true",
+#                         help="Compute token budgets from the last dry run's stdout")
+#     parser.add_argument("--create-budgets-from-tokens", action="store_true",
+#                         help="Create budget file by multiplying output_tokens from a CSV file")
+#     parser.add_argument("--tokens-file", default="",
+#                         help="Path to CSV file with output_tokens column (for --create-budgets-from-tokens)")
+#     parser.add_argument("--budget-multiplier", type=float, default=0.5,
+#                         help="Multiplier for output_tokens (e.g., 0.5 for 50%%, 0.75 for 75%%). Default: 0.5")
+#     parser.add_argument("--run-with-budgets", action="store_true",
+#                         help="Run again using computed or given token budgets")
+#     parser.add_argument("--budgets-file", default="",
+#                         help="Path to a precomputed budgets CSV to use in budgeted run")
+#     parser.add_argument("--budgets-percentile", type=int, default=50,
+#                         help="Percentile column to use when converting token budgets (e.g. 50 for budget_50)")
+#     parser.add_argument("--verify-after", action="store_true",
+#                         help="Verify latest outputs using verify_outputs.py")
 
-    # Set output directory
-    if args.output_dir:
-        DIR = args.output_dir
-    else:
-        # Use default: results/{model_id}/{dataset_name}/unbounded
-        from constants import get_results_dir
-        dataset_name = Path(dataset_file).stem.replace('_benchmark', '')
-        DIR = get_results_dir(dataset_name, "unbounded")
+#     args = parser.parse_args()
 
-    # Create output directories
-    Path(DIR).mkdir(parents=True, exist_ok=True)
-    for subdir in ['answers', 'configs', 'metrics']:
-        (Path(DIR) / subdir).mkdir(exist_ok=True)
+#     # Set global variables based on arguments
+#     dataset_file = args.dataset
 
-    # Update client configs with num_prompts
-    client_configs[0]['num_prompts'] = args.num_prompts
+#     # Infer answers file if not provided
+#     if args.answers:
+#         answers_file = args.answers
+#     else:
+#         # Infer from dataset name (e.g., AIME25_benchmark.json -> AIME25.jsonl)
+#         dataset_name = Path(dataset_file).stem
+#         if '_benchmark' in dataset_name:
+#             dataset_name = dataset_name.replace('_benchmark', '')
+#         answers_file = f"{dataset_name}.jsonl"
 
-    asyncio.run(main(args))
+#     # Set output directory
+#     if args.output_dir:
+#         DIR = args.output_dir
+#     else:
+#         # Use default: results/{model_id}/{dataset_name}/unbounded
+#         from constants import get_results_dir
+#         dataset_name = Path(dataset_file).stem.replace('_benchmark', '')
+#         DIR = get_results_dir(dataset_name, "unbounded")
+
+#     # Create output directories
+#     Path(DIR).mkdir(parents=True, exist_ok=True)
+#     for subdir in ['answers', 'configs', 'metrics']:
+#         (Path(DIR) / subdir).mkdir(exist_ok=True)
+
+#     # Update client configs with num_prompts
+#     client_configs[0]['num_prompts'] = args.num_prompts
+
+#     asyncio.run(main(args))
     

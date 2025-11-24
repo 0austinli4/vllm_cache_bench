@@ -1,10 +1,11 @@
 import os
 from pathlib import Path
 
-MODEL = "/scratch/gpfs/WLLOYD/al2926/hf_models/Qwen/models--Qwen--Qwen3-32B/snapshots/9216db5781bf21249d130ec9da846c4624c16137"
-# MODEL = "/scratch/gpfs/WLLOYD/al2926/hf_models/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 # MODEL = "/scratch/gpfs/WLLOYD/al2926/hf_models/Qwen/models--Qwen--Qwen2.5-Math-7B-Instruct/snapshots/ef9926d75ab1d54532f6a30dd5e760355eb9aa4d"
-
+# MODEL = "/scratch/gpfs/WLLOYD/al2926/hf_models/Xin-Rui/models--Xin-Rui--BudgetThinker-1.5b/snapshots/b7304c41480eca765e2f77b5a6641133c64c1ea7"
+# MODEL = "/scratch/gpfs/WLLOYD/al2926/hf_models/Salesforce/models--Salesforce--E1-Math-1.5B/snapshots/3fa7501acb8aec762347e70be9a04a6324c886fc"
+# MODEL = "/scratch/gpfs/WLLOYD/al2926/hf_models/Salesforce/models--Salesforce--E1-Math-7B/snapshots/d5c4a114d31f5a485603704143291b38ac65d052"
+MODEL = "/scratch/gpfs/WLLOYD/al2926/hf_models/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 # Extract model ID from path
 MODEL_ID = MODEL.split('/')[-1]
 
@@ -52,7 +53,7 @@ LOG_FILE = f"{DIR}/vllm"
 # --num-scheduler-steps 1
 VLLM_SERVER_CMD_TEMPLATE = (
     "VLLM_SERVER_DEV_MODE=1 VLLM_LOGGING_LEVEL=INFO vllm serve {model} --disable-log-requests "
-    "--max_num_seqs 512 --max-model-len 4096 --disable_custom_all_reduce "
+    "--max_num_seqs 512 --disable_custom_all_reduce "
     "--enable-chunked-prefill --enable-prefix-caching "
     "{args}"
 )

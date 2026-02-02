@@ -479,17 +479,17 @@ async def main(args):
 if __name__ == "__main__":
     from transformers import AutoTokenizer, AutoModelForCausalLM
 
-    cache_dir = "/scratch/gpfs/WLLOYD/al2926/hf_models/BAAI"
+    cache_dir = "/scratch/gpfs/WLLOYD/al2926/hf_models/daman1209arora"
     # daman1209arora/alpha_0.2_DeepSeek-R1-Distill-Qwen-7B
     # daman1209arora/alpha_0.4_DeepSeek-R1-Distill-Qwen-7B
     tokenizer = AutoTokenizer.from_pretrained(
-        "BAAI/bge-small-en",
+        "daman1209arora/alpha_0.4_DeepSeek-R1-Distill-Qwen-7B",
         cache_dir=cache_dir,
         trust_remote_code=True
     )
 
     model = AutoModelForCausalLM.from_pretrained(
-        "BAAI/bge-small-en",
+        "daman1209arora/alpha_0.4_DeepSeek-R1-Distill-Qwen-7B",
         cache_dir=cache_dir,
         trust_remote_code=True
     )
